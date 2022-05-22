@@ -375,10 +375,13 @@ Future<void> _handleSignInWithGoogle() async {
       idToken: googleAuth?.idToken,
     );
 
-    await FirebaseAuth.instance.signInWithCredential(credential).then((value){
-      FirebaseAuth.instance.currentUser!.updateDisplayName(googleUser!.displayName);
-      FirebaseAuth.instance.currentUser!.updatePhotoURL(googleUser.photoUrl);
-      FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).set(UserModel.getUserMap(DateTime.now()));
+    await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get();
+      if (!doc.exists) {
+        await FirebaseAuth.instance.currentUser!.updateDisplayName(googleUser!.displayName);
+        await FirebaseAuth.instance.currentUser!.updatePhotoURL(googleUser.photoUrl);
+        FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).set(UserModel.getUserMap(DateTime.now()));
+      }
     });
   } catch (error) {
     print(error);

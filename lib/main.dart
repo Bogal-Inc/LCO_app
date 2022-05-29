@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Light Cut Off',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.amber,
       ),
       home: const SplashScreen(),
     );

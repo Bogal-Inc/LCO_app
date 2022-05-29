@@ -44,6 +44,9 @@
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token"/>
 
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA5RGi0HqYcwBA3xelEIM87p6oZ43zZStU"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -83,3 +86,4 @@
             android:value="2" />
     </application>
 </manifest>
+

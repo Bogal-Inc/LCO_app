@@ -6,6 +6,8 @@ import 'package:lightcutoff/Authentication/SignIn.dart';
 import 'package:lightcutoff/Authentication/SignUp.dart';
 import 'package:lightcutoff/Screens/Home.dart';
 
+import '../test.dart';
+
 class Authentication extends StatefulWidget {
   const Authentication({Key? key}) : super(key: key);
 
@@ -89,7 +91,12 @@ class _AuthState extends State<Auth> with SingleTickerProviderStateMixin {
       child: Scaffold(
         body: Stack(
           children: [
-            const Background(),
+            CustomPaint(
+              painter: BackgroundPainter(
+                //animation: _controller,
+              ),
+              size: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+            ),
             ValueListenableBuilder(
               valueListenable: showSignInPage,
               builder: (BuildContext context, bool value, Widget? child) {
@@ -139,3 +146,29 @@ class Background extends StatelessWidget {
     );
   }
 }
+
+
+class BackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = Colors.teal
+      ..strokeWidth = 5
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    var path = Path();
+    path.moveTo(0, size.height / 3);
+    path.lineTo(size.width * 0.6, size.height / 3);
+    //path.arcTo(Rect.fromLTRB(50, 100, 250, size.height * 0.7), 0.175, 0.349, false);
+    path.lineTo(size.width, size.height / 2);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    return false;
+  }
+}
+

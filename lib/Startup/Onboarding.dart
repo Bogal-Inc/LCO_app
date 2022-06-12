@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Authentication/Authentication.dart';
 
 class Onboarding extends StatefulWidget {
@@ -19,8 +20,10 @@ class _OnboardingState extends State<Onboarding> {
       globalBackgroundColor: Colors.white,
       isTopSafeArea: true,
       pages: listPagesViewModel,
-      onDone: () {
-        /// TODO: set onboarding pref as true
+      onDone: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool("skipOnboarding", true);
+
         Navigator.of(context).pushReplacement(
             PageTransition(
               type: PageTransitionType.fade,
